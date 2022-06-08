@@ -1,9 +1,3 @@
-var =0
-
-while var<6:
-    var+=1
-    if var % 2==0:
-        continue
-    print("#")
-
+list = [0 for i in range(1,3)]
     
+print(list)
