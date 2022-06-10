@@ -1,3 +1,7 @@
-list = [0 for i in range(1,3)]
-    
-print(list)
+a = 1
+
+b = 0
+c = a & b
+d = a | b
+e = a ^ b
+print(c+d+e)
