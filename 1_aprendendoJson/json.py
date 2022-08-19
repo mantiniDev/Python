@@ -12,5 +12,7 @@ data_JSON =  """
 	}
 }
 """
-data_dict = json.load(data_JSON)
-print(data_dict)
+data_dict = json.loads(data_JSON)
+
+
+print(data_dict["size"])
