@@ -28,7 +28,7 @@ for j in range(numErros):
             numCCB = i['number']
             nome = i['issuer_name']
             numCPF = i['issuer_cpf']
-            print(f'Erro n: {contador}\nCCB: {numCCB} \nNome: {nome} \nCPF: {numCPF}')
+            print(f'Erro n: {contador}\nCCB: {numCCB} \nNome: {nome} \nCPF: {numCPF} \nCPF: {numCPF}')
             #print('CPF: ' + numCPF[-11:-9]+'.'+numCPF[-9:-6]+'.'+numCPF[-6:-3]+'-'+numCPF[-3:-1]+'\n')
             print('CPF: ' + numCPF[3:6]+'.'+numCPF[6:9] +
                   '.'+numCPF[9:12]+'-'+numCPF[12:14]+'\n')
