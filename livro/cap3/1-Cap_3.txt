@@ -1,0 +1,11 @@
+Delete um item de uma lista quandos e sabe a posição - del.variavel[0];
+
+Metodo pop() remove o último item da lista, mas permite que se trabalhe com o valor removido - variavel.pop(); 
+Pode ser usado também, para remover o item em qulquer posição - variavel.pop(0);
+
+Meodos remove() conhece apenas o valor que deseja remover - variavel.remove('variavel');
+
+
+
+
+
