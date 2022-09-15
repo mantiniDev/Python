@@ -1,0 +1,10 @@
+l = input('Digite um  número: ')
+b = input('Digite outro número: ')
+d = input('Digite mais outro número: ')
+a = int(l)
+w = float(b)
+y = str(d)
+
+print(a)
+print(w)
+print(y)
