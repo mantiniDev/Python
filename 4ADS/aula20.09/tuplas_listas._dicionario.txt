@@ -1,0 +1,12 @@
+Tuplas - Imutaveis
+
+ex. lanhes = ('hambuguer', 'suco', 'pizza', 'pudim')
+
+Lista - Mutáveis
+
+ex. lanches = ['hambuguer', 'suco', 'pizza', 'pudim']
+    usar list()
+
+Dicionário utiliza { }
+
+dados = dict()
