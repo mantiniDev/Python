@@ -12,3 +12,9 @@ galera.append(40)
 #pessoa[1]= 40
 galera.append(pessoa)
 print(galera)
+galera.append('thiago')
+galera.append(40)
+#pessoa[0]= 'thiago'
+#pessoa[1]= 40
+galera.append(pessoa)
+print(galera)
