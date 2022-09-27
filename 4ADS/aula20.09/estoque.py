@@ -7,7 +7,8 @@ for i in range(0,2):
     itens['Marca'] = str(input('Qual a marca do produto: '))
     itens['Quantidade'] = int(input('Quantiade: '))
     itens['Preço'] = float(input('Preço: '))
-    estoque.append(itens)
+    #estoque.append(itens)
+    estoque.append(itens.copy())
 print('O estoque possui: \n')
 for x in estoque:
     for i, t in itens.items():
