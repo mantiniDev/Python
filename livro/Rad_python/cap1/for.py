@@ -12,3 +12,7 @@ for item in ['bus', 'car', 'aviao']:
 # range(x,y) - ocorre o incremento em uma faixa pr-e-determinada;
 
 # range(x,y,z) - entre os valores x até y, com exclusão do y, ocorre o incremento de z;
+
+var = list(range(5))
+
+print(var)
