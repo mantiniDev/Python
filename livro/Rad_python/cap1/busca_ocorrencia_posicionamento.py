@@ -1,0 +1,1 @@
+# count(s,inicio,final) 
