@@ -1,5 +1,5 @@
 # PACOTE Uteis
-
+import os
 # LINHA DUPLA
 def linha():
     print('=' *30)
@@ -14,8 +14,7 @@ def linha2():
 
 # LIMPA A TELA
 def limpa():
-    for c in range(1, 25):
-        print(' ' *80)
+    os.system('CLS')
 
 # ESQUEMA DE BANCO DE DADOS
 def esquema():
