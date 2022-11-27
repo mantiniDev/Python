@@ -7,11 +7,11 @@ import sqlite3
 
 path = os.path.dirname(__file__)
 
-favicon = os.path+'\\4ADS\aula08.11\computer.ico'
+#favicon = os.path+'\\4ADS\aula08.11\computer.ico'
 
 app = Tk()
 app.title('GUI com Banco de Dados')
-app.iconbitmap(favicon)
+#app.iconbitmap(favicon)
 app.geometry('400x200')
 
 #banco de dados - SQLITE3
