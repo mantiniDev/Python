@@ -1,4 +1,5 @@
 # Compreende a combinação pares de chave/valores (KEY/VALUE) únicos, onde os valores dos pares são separados por ":" e os pares são separados por ",". Também, são imutáveis. 
+import func_dicionario
 
 paises = {'Brasil':'Brasilia', 'Argentina': 'Buenos Aires', 'Bolivia':'La Paz',}
 
@@ -15,8 +16,11 @@ print(f'O dicionario de Paises ficou dessa forma: ')
 for PAISES, CAPITAIS in paises.items():
     print(f'A capital de {PAISES} é {CAPITAIS}')
 print('\n')
-m = input('Digite o pais a ser apagado? ')
-del paises[m]
+m = input('Digite o pais a ser apagado? \n')
+# del paises[m]
+
+func_dicionario.excluir(paises,m)
+print('\n')
 print(f'O dicionario após a exclusão ficou dessa forma: ')
 
 for PAISES, CAPITAIS in paises.items():
