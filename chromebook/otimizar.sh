@@ -249,9 +249,76 @@ for s in ModemManager.service cups-browsed.service cups.service avahi-daemon.ser
 done
 
 # ---------------------------------------------------------------------------
-# 8. Limpeza
+# 8. Trocar o Snap pelo Firefox .deb da Mozilla (Ubuntu/Lubuntu)
 # ---------------------------------------------------------------------------
-titulo "8. Limpeza de pacotes"
+if [[ $PM == apt ]] && tem snap; then
+    titulo "8. Remover o Snap (Firefox passa a vir direto da Mozilla)"
+    echo "O Snap ocupa RAM e disco e deixa o Firefox lento para abrir."
+    echo "Seus favoritos e senhas do Firefox são copiados automaticamente."
+    if pgrep -x firefox >/dev/null || pgrep -f '/snap/firefox' >/dev/null; then
+        amarelo "Feche o Firefox antes deste passo. Pulando por enquanto."
+    elif perguntar "Remover o Snap e instalar o Firefox da Mozilla?"; then
+        # Repositório oficial da Mozilla (https://support.mozilla.org, "Install Firefox on Linux")
+        instalar wget gpg
+        install -d -m 0755 /etc/apt/keyrings
+        wget -qO /etc/apt/keyrings/packages.mozilla.org.asc \
+            https://packages.mozilla.org/apt/repo-signing-key.gpg
+        fp=$(gpg -n -q --import --import-options import-show --with-colons \
+                 /etc/apt/keyrings/packages.mozilla.org.asc 2>/dev/null \
+             | awk -F: '/^fpr/{print $10; exit}')
+        if [[ $fp != 35BAA0B33E9EB396F59CA838C0BA5CE6DC6315A3 ]]; then
+            amarelo "Chave da Mozilla não confere; abortando este passo."
+            rm -f /etc/apt/keyrings/packages.mozilla.org.asc
+        else
+            echo "deb [signed-by=/etc/apt/keyrings/packages.mozilla.org.asc] https://packages.mozilla.org/apt mozilla main" \
+                > /etc/apt/sources.list.d/mozilla.list
+            cat > /etc/apt/preferences.d/90-chromebook-mozilla <<'EOF'
+# Configurado por otimizar.sh: Firefox vem do repositório da Mozilla
+Package: *
+Pin: origin packages.mozilla.org
+Pin-Priority: 1000
+EOF
+            cat > /etc/apt/preferences.d/90-chromebook-nosnap <<'EOF'
+# Configurado por otimizar.sh: impede o snapd de voltar
+Package: snapd
+Pin: release a=*
+Pin-Priority: -10
+EOF
+
+            # Copia o perfil do Firefox Snap (favoritos, senhas, extensões)
+            usuario="${SUDO_USER:-}"
+            if [[ -n $usuario ]]; then
+                casa=$(getent passwd "$usuario" | cut -d: -f6)
+                perfil_snap="$casa/snap/firefox/common/.mozilla/firefox"
+                if [[ -d $perfil_snap && ! -e $casa/.mozilla/firefox ]]; then
+                    mkdir -p "$casa/.mozilla"
+                    cp -a "$perfil_snap" "$casa/.mozilla/"
+                    chown -R "$usuario": "$casa/.mozilla"
+                    verde "Perfil do Firefox copiado para $casa/.mozilla."
+                fi
+            fi
+
+            # Remove os snaps; dependências (core, temas) saem nas passadas seguintes
+            for _ in 1 2 3; do
+                for s in $(snap list 2>/dev/null | awk 'NR>1 && $1!="snapd"{print $1}'); do
+                    snap remove --purge "$s" >/dev/null 2>&1 || true
+                done
+            done
+            snap remove --purge snapd >/dev/null 2>&1 || true
+            apt-get purge -y snapd
+            rm -rf /var/cache/snapd /root/snap
+
+            apt-get update -qq
+            instalar firefox firefox-l10n-pt-br
+            verde "Snap removido e Firefox da Mozilla instalado."
+        fi
+    fi
+fi
+
+# ---------------------------------------------------------------------------
+# 9. Limpeza
+# ---------------------------------------------------------------------------
+titulo "9. Limpeza de pacotes"
 if perguntar "Remover pacotes órfãos e limpar o cache de pacotes?"; then
     case $PM in
         apt) apt-get autoremove --purge -y && apt-get clean ;;

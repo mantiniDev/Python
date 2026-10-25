@@ -31,7 +31,10 @@ O script (apt, dnf ou pacman) faz:
 5. **TLP + thermald** — mais bateria e menos aquecimento.
 6. **Driver de vídeo i965** — vídeos usam a GPU em vez da CPU.
 7. **Serviços** — oferece desativar ModemManager, impressão, Bluetooth, Avahi.
-8. **Limpeza** — remove pacotes órfãos e cache.
+8. **Snap** (só Ubuntu/Lubuntu) — remove o Snap e instala o Firefox `.deb`
+   direto do repositório da Mozilla, copiando seu perfil (favoritos, senhas).
+   Feche o Firefox antes.
+9. **Limpeza** — remove pacotes órfãos e cache.
 
 Todos os arquivos criados têm "chromebook" no nome:
 `/etc/sysctl.d/99-chromebook.conf`, `/etc/systemd/journald.conf.d/00-chromebook.conf`,
@@ -56,10 +59,30 @@ sudo apt install xubuntu-core   # depois escolha "Xfce" na tela de login
 ### Remover o Snap (Ubuntu e derivados)
 
 O Snap ocupa centenas de MB e deixa a abertura de programas mais lenta.
-No Linux Mint ele já vem desativado. No Ubuntu/Xubuntu/Lubuntu, troque o
-Firefox Snap pelo pacote `.deb` do repositório da Mozilla antes de remover o
-Snap (siga as instruções em https://support.mozilla.org, busque
-"Install Firefox on Linux").
+No Linux Mint ele já vem desativado. No Ubuntu/Xubuntu/Lubuntu, o passo 8 do
+script faz a troca automaticamente.
+
+### Lubuntu 24.04 (LXQt 1.4) — o sistema atual
+
+O Lubuntu já é uma das opções mais leves; não precisa trocar de distro.
+Ordem sugerida:
+
+1. `sudo apt update && sudo apt full-upgrade`, depois reinicie.
+2. `sudo bash otimizar.sh` aceitando os padrões (zram, earlyoom, TRIM, TLP,
+   vídeo, ModemManager e remoção do Snap fazem a maior diferença).
+3. Reinicie e confira com `bash otimizar.sh --info`: deve aparecer
+   `/dev/zram0` no swap.
+4. Ajustes no LXQt (menu → Preferências → Configurações do LXQt):
+   - **Configurações da sessão → Inicialização automática**: desmarque o que
+     não usa (ex.: notificador de atualizações, Qlipper/área de transferência,
+     applet de Bluetooth se não usa).
+   - **Configurações da sessão → Gerenciador de janelas**: mantenha o
+     Openbox, sem compositor (picom), que gasta CPU/GPU.
+   - **Aparência**: tema e ícones simples; evite papel de parede animado.
+5. Instale programas pelo terminal (`sudo apt install ...`) em vez do
+   Discover, que é pesado.
+6. O `keyd` não está nos repositórios do 24.04: compile do GitHub (seção 5)
+   ou espere a próxima LTS.
 
 ## 3. Navegador (o que mais pesa no dia a dia)
 
